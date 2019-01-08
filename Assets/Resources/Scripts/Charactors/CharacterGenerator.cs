@@ -11,8 +11,16 @@ public class CharacterGenerator : MonoBehaviour {
         GameObject instantCharacter = Instantiate(CharacterPrefab, 
             new Vector3(iStageObject.transform.position.x, createHeight, iStageObject.transform.position.z), 
                 Quaternion.identity) as GameObject;
-
+        AddCharacterList(instantCharacter);
         return instantCharacter;
+    }
+
+    #endregion
+
+    #region Private Method
+    private void AddCharacterList(GameObject iCharacterObject)
+    {
+        CharacterList.Add(iCharacterObject);
     }
 
     #endregion
@@ -23,7 +31,7 @@ public class CharacterGenerator : MonoBehaviour {
     #endregion
 
     #region Private Value
-
+    private List<GameObject> CharacterList = new List<GameObject>();
 
     #endregion
 }

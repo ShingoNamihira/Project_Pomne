@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharaController : MonoBehaviour {
 
-    #region Public Methods
+    #region Properties
     public GameObject GetSetAssignedObject
     {
         get { return assignedObject;  }
@@ -22,18 +22,24 @@ public class CharaController : MonoBehaviour {
     #region Private Methods
     private void Start()
     {
-        stageController = assignedObject.GetComponent<StageController>();
-        stageGenerator  = stageGeneratorObject.GetComponent<StageGenerator>();
-        characterGenerator = characterGeneratorObject.GetComponent<CharacterGenerator>();
+        Debug.Log(assignedObject.GetComponent<StageController>());
+        stageController     = assignedObject.GetComponent<StageController>();
+        stageGenerator      = stageGeneratorObject.GetComponent<StageGenerator>();
+        characterGenerator  = stageGenerator.GetComponent<CharacterGenerator>();    
     }
 
     private void Update()
+    {
+        ChangeMoveMode();
+    }
+
+    private void ChangeMoveMode()
     {
         //右を押したとき
         if (moveMode == 0 && Input.GetKey(KeyCode.RightArrow))
         {
             moveMode = 1;
-            
+
         }
         //左を押したとき
         if (moveMode == 0 && Input.GetKey(KeyCode.LeftArrow))
@@ -53,6 +59,8 @@ public class CharaController : MonoBehaviour {
 
         switch (moveMode)
         {
+            case 0:
+                break;
             case 1:
                 int arrayI = stageController.GetSetArrayI;  //配列のiを取得
                 int arrayJ = stageController.GetSetArrayJ;  //配列のjを取得
@@ -64,7 +72,6 @@ public class CharaController : MonoBehaviour {
                 else
                 {
                     moveMode = 0;
-                    CreateCharacter();
                 }
                 break;
 
@@ -79,7 +86,6 @@ public class CharaController : MonoBehaviour {
                 else
                 {
                     moveMode = 0;
-                    CreateCharacter();
                 }
                 break;
             case 3:
@@ -93,7 +99,6 @@ public class CharaController : MonoBehaviour {
                 else
                 {
                     moveMode = 0;
-                    CreateCharacter();
                 }
                 break;
             case 4:
@@ -107,7 +112,6 @@ public class CharaController : MonoBehaviour {
                 else
                 {
                     moveMode = 0;
-                    CreateCharacter();
                 }
                 break;
         }
@@ -155,6 +159,8 @@ public class CharaController : MonoBehaviour {
             Debug.Log(characterGenerator);
             instantCharacter = characterGenerator.CharacterCreate(stageGenerator.GetStageArray[randomI, randomJ]);        //生成したキャラ
             stageGenerator.GetStageArray[randomI, randomJ].GetComponent<StageController>().GetSetCharacterFlag = true;    //Stageのキャラフラグをtrueに
+            instantCharacter.GetComponent<CharaController>().GetSetAssignedObject = stageGenerator.GetStageArray[randomI, randomJ];
+            instantCharacter.GetComponent<CharaController>().GetSetStageGeneratorObject = stageGeneratorObject;
         }
         else
         {
@@ -165,7 +171,6 @@ public class CharaController : MonoBehaviour {
     #endregion
 
     #region SerializeField
-    [SerializeField] GameObject characterGeneratorObject;
 
     #endregion
 
@@ -176,6 +181,7 @@ public class CharaController : MonoBehaviour {
     private StageGenerator stageGenerator;      //StartのみでOK
     private int moveMode = 0;
     private CharacterGenerator characterGenerator;
+    private GameObject characterGeneratorObject;
 
     #endregion
 
