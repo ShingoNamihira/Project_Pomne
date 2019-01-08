@@ -175,8 +175,9 @@ public class CharaController : MonoBehaviour {
     private GameObject stageGeneratorObject;    //StartのみでOK
     private StageGenerator stageGenerator;      //StartのみでOK
     private int moveMode = 0;
-    private CharacterGenerator characterGenerator
+    private CharacterGenerator characterGenerator;
 
     #endregion
 
 }
+
