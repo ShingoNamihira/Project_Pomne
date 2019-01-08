@@ -37,7 +37,7 @@ public class StageGenerator : MonoBehaviour {
             }
         }
 
-        CharacterGenerator CharacterGenerator = gameObject.GetComponent<CharacterGenerator>();
+        CharacterGenerator characterGenerator = gameObject.GetComponent<CharacterGenerator>();
         //ステージ生成時にキャラを2体生成する
         for (int i = 0; i < 2; i++)
         {
@@ -46,7 +46,7 @@ public class StageGenerator : MonoBehaviour {
             GameObject instantCharacter;
             if (stageArray[random1, random2].GetComponent<StageController>().GetSetCharacterFlag != true)
             {
-                instantCharacter = CharacterGenerator.CharacterCreate(stageArray[random1, random2]);        //生成したキャラ
+                instantCharacter = characterGenerator.CharacterCreate(stageArray[random1, random2]);        //生成したキャラ
                 stageArray[random1, random2].GetComponent<StageController>().GetSetCharacterFlag = true;    //Stageのキャラフラグをtrueに
             }
             else
@@ -89,7 +89,7 @@ public class StageGenerator : MonoBehaviour {
     #region Private Values
     private float betweenValue = 0.1f;          //ステージの間隔
     private GameObject[,] stageArray;           //ステージの配列
-    private int stageSize = 2;                  //ステージの大きさ
+    private int stageSize = 10;                  //ステージの大きさ
 
     #endregion
 }
